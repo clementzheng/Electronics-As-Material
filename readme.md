@@ -64,17 +64,36 @@ For a more detailed explanation, do refer to this [Sparkfun's article on logic l
 ## <a id="button">Button</a>
 A button in its simplest form is an input that provides an `on` or `off` state, usually by closing or opening an electrical circuit. To read a button with a microcontroller, we need to construct a circuit connected to a digital pin that can toggle between `HIGH/1` and `LOW/0` depending on the interaction with the button.
 
+<br>
+
 ### Button with pull-down resistor
 
 ![button wiring](img/buttonWiring.png) 
 
-We use the diagram on the right to create our button circuit.
+We use the diagram above to create our button circuit.
 
 ![button wiring](img/buttonScheme.png) 
 
 This circuit follows the following schematic. Essentially, when the button is open, the resistor "pulls down" the digital pin value to `Ground`, and it reads `LOW/0`. (That is why it is called a pull-down resistor.) When the button is closed, the level at the digital pin is `5V` and it reads `HIGH/1`.
 
 Use the following [example code](code/buttonRead.ino) to read this circuit. The digital pin used in this example is `7`.
+
+<br>
+
+### Button with internal pull-up
+
+Microcontrollers like the Arduino Uno R3 also provide internal pull-up resistors for some digital pins. In this case, a button circuit can be simplified following the diagram below.
+
+![button pull-up wiring](img/buttonPUWiring.png) 
+![button pull-up scheme](img/buttonPUScheme.png) 
+
+This circuit follows the following schematic. Essentially, when the button is open, an internal resistor "pulls up" the digital pin value to `5V`, and it reads `HIGH/1`. (That is why it is called a pull-up resistor, note that the readings are opposite from a button with a pull-down resistor.) When the button is closed, the level at the digital pin is `Ground` and it reads `LOW/0`.
+
+To access the internal pull-up resistor on an Arduino Uno R3, we will use the `pinMode` command to set the type of pin to `INPUT_PULLUP`. 
+
+e.g. `pinMode(7, INPUT_PULLUP)`.
+
+Use the following [example code](code/buttonRead_pullup.ino) to read this circuit. The digital pin used in this example is `7`.
 
 <br>
 <br>
