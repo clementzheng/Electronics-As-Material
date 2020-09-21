@@ -96,6 +96,29 @@ e.g. `pinMode(7, INPUT_PULLUP)`.
 Use the following [example code](code/buttonRead_pullup.ino) to read this circuit. The digital pin used in this example is `7`.
 
 <br>
+
+### Detecting Button Down and Up Event
+
+In the previous examples, the code prints the button value every loop. This section describes how code can be written to print only during the instance when the button is pressed and released.
+
+[Example code here](code/buttonEvent.ino).
+
+For this code, we introduce a new variable `buttonValPrev`. On top of reading and storing the value of the button from `digitalRead`, we also keep track of its last value (from the previous update loop).
+
+| loop number | current reading | previous reading | difference | event |
+| --- | --- | --- | --- | --- |
+| 1 | 1 | 1 | 0 | |
+| 2 | 1 | 1 | 0 | |
+| 3 | 0 | 1 | -1 | pressed |
+| 4 | 0 | 0 | 0 | |
+| 5 | 0 | 0 | 0 | |
+| 6 | 1 | 0 | 1 | released |
+| 7 | 1 | 1 | 0 | |
+| 8 | 1 | 1 | 0 | |
+
+As illustrated by the table above, the previous reading is always trailing behind the current reading by one loop. Taking the difference will tell if a button is just pressed or released. When the different between current and previous reading is 0, the button state remains unchanged. However, when the difference is -1, the button was just pressed; and when the difference is 1, the button was just released.
+
+<br>
 <br>
 <br>
 
