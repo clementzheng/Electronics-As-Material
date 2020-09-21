@@ -65,10 +65,16 @@ For a more detailed explanation, do refer to this [Sparkfun's article on logic l
 A button in its simplest form is an input that provides an `on` or `off` state, usually by closing or opening an electrical circuit. To read a button with a microcontroller, we need to construct a circuit connected to a digital pin that can toggle between `HIGH/1` and `LOW/0` depending on the interaction with the button.
 
 ### Button with pull-down resistor
-|  |  |
-|---|---|
-| We use the diagram on the right to create our button circuit. | ![button wiring](img/buttonWiring.png) |
-| This circuit follows the following schematic. Essentially, when the button is open, the resistor "pulls down" the digital pin value to `Ground`, and it reads `LOW/0`. (That is why it is called a pull-down resistor.) When the button is closed, the level at the digital pin is `5V` and it reads `HIGH/1`. | asd |
+
+![button wiring](img/buttonWiring.png) 
+
+We use the diagram on the right to create our button circuit.
+
+![button wiring](img/buttonScheme.png) 
+
+This circuit follows the following schematic. Essentially, when the button is open, the resistor "pulls down" the digital pin value to `Ground`, and it reads `LOW/0`. (That is why it is called a pull-down resistor.) When the button is closed, the level at the digital pin is `5V` and it reads `HIGH/1`.
+
+Use the following [example code](code/buttonRead.ino) to read this circuit. The digital pin used in this example is `7`.
 
 <br>
 <br>
