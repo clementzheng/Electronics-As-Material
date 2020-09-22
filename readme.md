@@ -11,9 +11,13 @@ Here, you will find information on how to build different sensors.
 ## Contents
 1. [Arduinos, Inputs, Logic Levels](#logic)
 1. [Button](#button)
-1. [Pressure Sensor](#pressure)
+    - [Button with pull-down resistor](#buttonPulldown)
+    - [Button with internal pull-up](#buttonPullup)
+    - [Detecting Button Push and Release Event](#buttonEvent)
 1. [Bend Sensor](#bend)
+1. [Pressure Sensor](#pressure)
 1. [Touch Sensor](#touch)
+1. [Materials Notes](#materials)
 
 <br>
 <br>
@@ -66,7 +70,7 @@ A button in its simplest form is an input that provides an `on` or `off` state, 
 
 <br>
 
-### Button with pull-down resistor
+### <a id="buttonPulldown">Button with pull-down resistor</a>
 
 ![button wiring](img/buttonWiring.png) 
 
@@ -80,7 +84,7 @@ Use the following [example code](code/buttonRead.ino) to read this circuit. The 
 
 <br>
 
-### Button with internal pull-up
+### <a id="buttonPullup">Button with internal pull-up</a>
 
 Microcontrollers like the Arduino Uno R3 also provide internal pull-up resistors for some digital pins. In this case, a button circuit can be simplified following the diagram below.
 
@@ -97,7 +101,7 @@ Use the following [example code](code/buttonRead_pullup.ino) to read this circui
 
 <br>
 
-### Detecting Button Down and Up Event
+### <a id="buttonEvent">Detecting Button Push and Release Event</a>
 
 In the previous examples, the code prints the button value every loop. This section describes how code can be written to print only during the instance when the button is pressed and released.
 
@@ -116,13 +120,7 @@ For this code, we introduce a new variable `buttonValPrev`. On top of reading an
 | 7 | 1 | 1 | 0 | |
 | 8 | 1 | 1 | 0 | |
 
-As illustrated by the table above, the previous reading is always trailing behind the current reading by one loop. Taking the difference will tell if a button is just pressed or released. When the different between current and previous reading is 0, the button state remains unchanged. However, when the difference is -1, the button was just pressed; and when the difference is 1, the button was just released.
-
-<br>
-<br>
-<br>
-
-## <a id="pressure">Pressure Sensor</a>
+As illustrated by the table above, the previous reading is always trailing behind the current reading by one loop. Taking the difference will tell us if a button has just been pressed or released. When the difference between the current and previous reading is 0, the button state remains unchanged. However, when the difference is -1, the button was just pressed; and when the difference is 1, the button was just released.
 
 <br>
 <br>
@@ -130,11 +128,61 @@ As illustrated by the table above, the previous reading is always trailing behin
 
 ## <a id="bend">Bend Sensor</a>
 
+Bend sensors translate a physical bending deformation into an electrical signal that a microcontroller can detect. In this example, we use carbon-coated paper and its variable electrical resistance during bending as a sensor.
+
+Specifically, we will use carbon-coated paper from [PASCO](https://www.pasco.com/products/lab-apparatus/electricity-and-magnetism/electrostatics-and-electric-fields/pk-9026). This paper has a thin layer of carbon paint on top of a kraft paper backing. The carbon layer is resistive (as in, poorly conductive). Carbon-coated paper can be seen as a two-dimensional resistor, where the electrical resistance between two points on the paper increases as the distance between the two points increases (see chart below).
+
+![carbon-coated paper material composition](img/carbonresistancelength.png)
+
+![carbon-coated paper material composition](img/bendMaterial.png)
+
+The diagram above illustrated the bilayer composition of carbon-coated paper. When the paper is bent inwards (towards the carbon layer), the carbon particles pack closer together, and electrical resistance decreases (it becomes "more" conductive). When the paper is bent outwards (away from the carbon layer), the carbon particles stretch apart, and electrical resistance increases.
+
+How does a microcontroller read electrical resistance? Microcontrollers are able to read changes in logic levels (that is "voltages"). We can therefore use the proportional relationship between Voltage and Resistance to measure the changing electrical resistance of a material. This technique is generally known as resistive sensing.
+
+Ohm's Law: `V = IR` `(Voltage = Current * Resistance)`
+
+![carbon-coated paper material wiring](img/bendWiring.png)
+
+To detect the resistance change when bending carbon-coated paper we will use the circuit illustrated above. A strip of carbon-coated paper is divided into two regions: a fixed region which does not deform, and a region that is bent. We will also use an analog pin and `analogRead` to read the change in levels detected by pin `A0` (as compared to using a digital pin and `digitalRead` which will only give us a binary response).
+
+![voltage divider](img/bendScheme.png)
+
+This circuit is essentially a voltage divider circuit, as illustrated with the schematic above. A voltage divider compares the resistance of a variable resistor (e.g. the carbon-paper strip as it bends) with the resistance of a dixed resistor (e.g. the static carbon-coated paper region). When the resistance of the variable resistor increases, the level between the two resistors decreases; when the resistance of the variable resistor decreases, the level between the two resistors increases. This is measured through the microcontroller and presented as a value based on the ADC resolution (e.g. 10-bits, or from `0-1023` in the case of the Arduino Uno R3).
+
+To read this bend sensor circuit, we will use the following [code example](code/analogRead.ino).
+
+For more information on voltage dividers, refer to this [Sparkfun article](https://learn.sparkfun.com/tutorials/voltage-dividers/all).
+
+<br>
+<br>
+<br>
+
+## <a id="pressure">Pressure Sensor</a>
+
+Pressure sensors translate force on the material into an electrical signal that a microcontroller can detect. In this example, we use velostat (anti-static plastic film) and its variable electrical resistance when pressed as a sensor.
+
+![making a velostat pressure sensor](img/pressureMake.png)
+
+The diagram above illustrates how to make a pressure sensor with velostat, copper tape, and a few other materials. NOTE: the parallel copper tape traces should be close to each other but **not** touching. Ensure that the non-sticky side is in contact with the velostat.
+
+![wiring pressure sensor](img/pressureWiring.png)
+
+Like the bend sensor, we will use a voltage divider circuit to read the pressure sensor, following the wiring diagram above. In this diagram, a 10kOhm resistor is used as the fixed resistor to compare with the resistance of the pressure sensor. However, this resistor value can be adjusted to optimize the range of readings that the microcontroller reads. Use [this tool](https://clementzheng.github.io/volt/) to calculate the optimum fixed resistor value to use. 
+
+To read this pressure sensor circuit, we will use the following [code example](code/analogRead.ino).
+
 <br>
 <br>
 <br>
 
 ## <a id="touch">Touch Sensor</a>
+
+<br>
+<br>
+<br>
+
+## <a id="materials">Materials Notes</a>
 
 <br>
 <br>
