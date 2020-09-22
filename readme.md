@@ -17,7 +17,6 @@ Here, you will find information on how to build different sensors.
 1. [Bend Sensor](#bend)
 1. [Pressure Sensor](#pressure)
 1. [Touch Sensor](#touch)
-1. [Materials Notes](#materials)
 
 <br>
 <br>
@@ -178,11 +177,18 @@ To read this pressure sensor circuit, we will use the following [code example](c
 
 ## <a id="touch">Touch Sensor</a>
 
-<br>
-<br>
-<br>
+Bare skin touch can be detected via capacitive sensing. This is how the touch screen on your phone works.
 
-## <a id="materials">Materials Notes</a>
+To build a capacitive touch sensor, we will use a 1MOhm (1 million ohms) resistor, copper tape, and the digital pins on an Arduino Uno R3 microcontroller. We will also use an additional [CapacitiveSensor](https://playground.arduino.cc/Main/CapacitiveSensor/) Arduino library.
+
+![wiring touch sensor](img/touchWiring.png)
+
+Follow the diagram above to build a capacitive touch sensing circuit. Connect a 1MOhm resistor between digital pins `4` and `2`. Pin `2` is the sensor pin, which is extended with copper tape. The copper tape is the touch sensitive region.
+
+Use the following [code](code/touchSensor.ino) to use this circuit.
+
+How does capacitive touch sensing work? Capacitors are two conductive plates separated by an insulator. A capacitive touch sensor is typically one plate of that capacitor that is charged up; with the other "plate" being the earth (the literal ground). Humans, through our skin, extend the ground and changes the charging rate of the capacitor. By observing the rate at which a conductive plate charges up, a microcontroller can sense touch. More information [here](https://www.bareconductive.com/news/what-is-capacitive-sensing/).
+
 
 <br>
 <br>
