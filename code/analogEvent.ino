@@ -9,7 +9,7 @@ void setup() {
 }
 
 void loop() {
-  analogVal = analogRead(pin); // digital read pin and assign the reading to buttonVal
+  analogVal = analogRead(pin); // analog read pin and assign the reading to buttonVal
   
   if (analogVal >= threshold && analogValPrev < threshold) {
     Serial.println("pressed");
