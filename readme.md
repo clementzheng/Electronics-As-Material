@@ -13,10 +13,10 @@ Here, you will find information on how to build different sensors.
 1. [Button](#button)
     - [Button with pull-down resistor](#buttonPulldown)
     - [Button with internal pull-up](#buttonPullup)
-    - [Detecting Button Push and Release Event](#buttonEvent)
 1. [Bend Sensor](#bend)
 1. [Pressure Sensor](#pressure)
 1. [Touch Sensor](#touch)
+1. [Detecting Sensor Events](#buttonEvent)
 
 <br>
 <br>
@@ -99,29 +99,6 @@ e.g. `pinMode(7, INPUT_PULLUP)`.
 Use the following [example code](code/buttonRead_pullup.ino) to read this circuit. The digital pin used in this example is `7`.
 
 <br>
-
-### <a id="buttonEvent">Detecting Button Push and Release Event</a>
-
-In the previous examples, the code prints the button value every loop. This section describes how code can be written to print only during the instance when the button is pressed and released.
-
-[Example code here](code/buttonEvent.ino).
-
-For this code, we introduce a new variable `buttonValPrev`. On top of reading and storing the value of the button from `digitalRead`, we also keep track of its last value (from the previous update loop).
-
-| loop number | current reading | previous reading | difference | event |
-| --- | --- | --- | --- | --- |
-| 1 | 1 | 1 | 0 | |
-| 2 | 1 | 1 | 0 | |
-| 3 | 0 | 1 | -1 | pressed |
-| 4 | 0 | 0 | 0 | |
-| 5 | 0 | 0 | 0 | |
-| 6 | 1 | 0 | 1 | released |
-| 7 | 1 | 1 | 0 | |
-| 8 | 1 | 1 | 0 | |
-
-As illustrated by the table above, the previous reading is always trailing behind the current reading by one loop. Taking the difference will tell us if a button has just been pressed or released. When the difference between the current and previous reading is 0, the button state remains unchanged. However, when the difference is -1, the button was just pressed; and when the difference is 1, the button was just released.
-
-<br>
 <br>
 <br>
 
@@ -185,10 +162,62 @@ To build a capacitive touch sensor, we will use a 1MOhm (1 million ohms) resisto
 
 Follow the diagram above to build a capacitive touch sensing circuit. Connect a 1MOhm resistor between digital pins `4` and `2`. Pin `2` is the sensor pin, which is extended with copper tape. The copper tape is the touch sensitive region.
 
-Use the following [code](code/touchSensor.ino) to use this circuit.
+Use the following [example code](code/touchSensor.ino) for this circuit.
 
 How does capacitive touch sensing work? Capacitors are two conductive plates separated by an insulator. A capacitive touch sensor is typically one plate of that capacitor that is charged up; with the other "plate" being the earth (the literal ground). Humans, through our skin, extend the ground and changes the charging rate of the capacitor. By observing the rate at which a conductive plate charges up, a microcontroller can sense touch. More information [here](https://www.bareconductive.com/news/what-is-capacitive-sensing/).
 
+
+<br>
+<br>
+<br>
+
+## <a id="buttonEvent">Detecting Sensor Events</a>
+
+In the previous examples, the code examples prints the sensor value every loop. This section describes how code can be written to print only during the instance when the sensor is "pressed" and "released".
+
+<br>
+
+### Example: Button
+
+Let's look at buttons/sensors that use `digitalRead` first. Since `digitalRead`'s output is either 1 or 0, detecting "push" and "release" events is more straightforward.
+
+[Example code here](code/buttonEvent.ino).
+
+For this code, we introduce a new variable `buttonValPrev`. On top of reading and storing the value of the button from `digitalRead`, we also keep track of its last value (from the previous update loop).
+
+| loop number | current reading | previous reading | difference | event |
+| --- | --- | --- | --- | --- |
+| 1 | 1 | 1 | 0 | |
+| 2 | 1 | 1 | 0 | |
+| 3 | 0 | 1 | -1 | pressed |
+| 4 | 0 | 0 | 0 | |
+| 5 | 0 | 0 | 0 | |
+| 6 | 1 | 0 | 1 | released |
+| 7 | 1 | 1 | 0 | |
+| 8 | 1 | 1 | 0 | |
+
+As illustrated by the table above, the previous reading is always trailing behind the current reading by one loop. Taking the difference will tell us if a button has just been pressed or released. When the difference between the current and previous reading is 0, the button state remains unchanged. However, when the difference is -1, the button was just pressed; and when the difference is 1, the button was just released.
+
+<br>
+
+### Example: Analog Sensors
+
+How about sensors that that give a range of values, such as via `analogRead` or the capacitive touch sensor? In this case, we need to set a threshold that determines when the event has occurred. For example, a pressure sensor is considered "pressed" when its `analogRead` value increases above `523` (just a random value for explanation purposes).  
+
+[Example code here](code/analogEvent.ino).
+
+| loop number | threshold | current reading | previous reading | event |
+| --- | --- | --- | --- | --- |
+| 1 | 523 | 101 | 0 | |
+| 2 | 523 | 203 | 101 | |
+| 3 | 523 | 551 | 203 | pressed |
+| 4 | 523 | 612 | 551 | |
+| 5 | 523 | 575 | 612 | |
+| 6 | 523 | 410 | 575 | released |
+| 7 | 523 | 182 | 410 | |
+| 8 | 523 | 0 | 182 | |
+
+As illustrated by the table above, the previous reading is always trailing behind the current reading by one loop. If the current reading is greater than the threshold, but the previous reading is smaller than the threshold, then the "press" event just occurred. If the current reading is smaller than the threshold, but the previous reading is greater than the threshold, then the "release" event just occurred.
 
 <br>
 <br>
