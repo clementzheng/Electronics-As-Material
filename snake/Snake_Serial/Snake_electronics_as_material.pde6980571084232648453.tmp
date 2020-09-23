@@ -1,0 +1,182 @@
+int gridSize = 30;
+int w = 60;
+int h = 40;
+
+int minSpeedInterval = 25; // LOWER = FASTER
+int maxSpeedInterval = 200; // HIGHER = SLOWER
+int initialSpeedInterval = 100;
+
+Snake snake;
+
+PVector apple;
+
+void setup() {
+  surface.setSize(gridSize*w, gridSize*h);
+  resetGame();
+}
+
+void draw() {
+  fill(255);
+  noStroke();
+  rect(0, 0, width, height);
+
+  snake.update(apple);
+  
+  fill(0);
+  noStroke();
+  ellipse(apple.x*gridSize + gridSize/2, apple.y*gridSize + gridSize/2, gridSize/1.2, gridSize/1.2);
+}
+
+void resetGame() {
+  snake = new Snake(10, float(round(w/2)), float(round(h/2)), initialSpeedInterval);
+  newApple();
+}
+
+void newApple() {
+  boolean checkSnake = false;
+  while (!checkSnake) {
+    apple = new PVector(floor(random(w)), floor(random(h)));
+    int counter = 0;
+    for (int i=0; i<snake.size; i++) {
+      if (snake.body[i].x == apple.x && snake.body[i].y == apple.y) {
+      } else {
+        counter++;
+      }
+    }
+    if (counter == snake.size) {
+      checkSnake = true;
+    }
+  }
+}
+
+class Snake {
+
+  int size;
+  int dir = 1;
+  PVector[] body;
+  int speedInterval;
+  int timestamp = 0;
+
+  boolean moving = false;
+  boolean dead = false;
+
+  Snake(int _size, float x, float y, int _speedInterval) {
+    size = _size;
+    speedInterval = _speedInterval;
+    body = new PVector[size];
+
+    float posX = x;
+    float posY = y;
+
+    for (int i=0; i<size; i++) {
+      body[i] = new PVector(posX - i, posY);
+    }
+  }
+
+  void update(PVector a) {
+    if (moving) {
+      if (millis() - timestamp > speedInterval) {
+        timestamp = millis();
+        
+        boolean ate = false;
+        PVector b = new PVector(body[size-1].x, body[size-1].y);
+        if (body[size-1].x == a.x && body[size-1].y == a.y) {
+          ate = true;
+        }
+
+        for (int i=size-1; i>0; i--) {
+          body[i] = new PVector(body[i-1].x, body[i-1].y);
+        }
+        
+        if (ate) {
+          size++;
+          body = (PVector[])expand(body, size);
+          body[size-1] = new PVector(b.x, b.y);
+        }
+
+        switch(dir) {
+        case 1:
+          body[0] = new PVector(body[0].x+1, body[0].y);
+          break;
+        case 2:
+          body[0] = new PVector(body[0].x, body[0].y+1);
+          break;
+        case 3:
+          body[0] = new PVector(body[0].x-1, body[0].y);
+          break;
+        case 4:
+          body[0] = new PVector(body[0].x, body[0].y-1);
+          break;
+        }
+      }
+    }
+
+    if (body[0].x < 0 || body[0].x >= w || body[0].y < 0 || body[0].y >= h) {
+      moving = false;
+      dead = true;
+    }
+
+    for (int i=size-1; i>0; i--) {
+      if (body[i].x == body[0].x && body[i].y == body[0].y) {
+        moving = false;
+        dead = true;
+        break;
+      }
+    }
+
+    for (int i=0; i<size; i++) {
+      fill(0);
+      if (dead && (millis()/250)%2 == 0) {
+        fill(255);
+      }
+      noStroke();
+      rect(body[i].x*gridSize, body[i].y*gridSize, gridSize, gridSize);
+    }
+  }
+}
+
+void moveRight() {
+  snake.moving = true;
+  if (snake.dir % 2 == 0) {
+    snake.dir = 1;
+  }
+}
+
+void moveDown() {
+  snake.moving = true;
+  if (snake.dir % 2 == 1) {
+    snake.dir = 2;
+  }
+}
+
+void moveLeft() {
+  snake.moving = true;
+  if (snake.dir % 2 == 0) {
+    snake.dir = 3;
+  }
+}
+
+void moveUp() {
+  snake.moving = true;
+  if (snake.dir % 2 == 1) {
+    snake.dir = 4;
+  }
+}
+
+void keyPressed() {
+  if (key == 'w' || key == 'W') {
+    moveUp();
+  }
+  if (key == 'a' || key == 'A') {
+    moveLeft();
+  }
+  if (key == 's' || key == 'S') {
+    moveDown();
+  }
+  if (key == 'd' || key == 'D') {
+    moveRight();
+  }
+  if (key == 'r' || key == 'R') {
+    resetGame();
+  }
+}

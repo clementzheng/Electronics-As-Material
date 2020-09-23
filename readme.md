@@ -4,6 +4,8 @@ Class materials for the Electronics As Material section in Design Fundamentals (
 
 Here, you will find information on how to build different sensors.
 
+Or, jump to the [page for the class assignment](snake).
+
 <br>
 <br>
 <br>
