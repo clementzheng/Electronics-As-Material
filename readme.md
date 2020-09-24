@@ -81,7 +81,7 @@ We use the diagram above to create our button circuit.
 
 This circuit follows the following schematic. Essentially, when the button is open, the resistor "pulls down" the digital pin value to `Ground`, and it reads `LOW/0`. (That is why it is called a pull-down resistor.) When the button is closed, the level at the digital pin is `5V` and it reads `HIGH/1`.
 
-Use the following [example code](code/buttonRead.ino) to read this circuit. The digital pin used in this example is `7`.
+Use the following [example code](code/buttonRead) to read this circuit. The digital pin used in this example is `7`.
 
 <br>
 
@@ -98,7 +98,7 @@ To access the internal pull-up resistor on an Arduino Uno R3, we will use the `p
 
 e.g. `pinMode(7, INPUT_PULLUP)`.
 
-Use the following [example code](code/buttonRead_pullup.ino) to read this circuit. The digital pin used in this example is `7`.
+Use the following [example code](code/buttonRead_pullup) to read this circuit. The digital pin used in this example is `7`.
 
 <br>
 <br>
@@ -128,7 +128,7 @@ To detect the resistance change when bending carbon-coated paper we will use the
 
 This circuit is essentially a voltage divider circuit, as illustrated with the schematic above. A voltage divider compares the resistance of a variable resistor (e.g. the carbon-paper strip as it bends) with the resistance of a dixed resistor (e.g. the static carbon-coated paper region). When the resistance of the variable resistor increases, the level between the two resistors decreases; when the resistance of the variable resistor decreases, the level between the two resistors increases. This is measured through the microcontroller and presented as a value based on the ADC resolution (e.g. 10-bits, or from `0-1023` in the case of the Arduino Uno R3).
 
-To read this bend sensor circuit, we will use the following [code example](code/analogRead.ino).
+To read this bend sensor circuit, we will use the following [code example](code/analogRead).
 
 For more information on voltage dividers, refer to this [Sparkfun article](https://learn.sparkfun.com/tutorials/voltage-dividers/all).
 
@@ -148,7 +148,7 @@ The diagram above illustrates how to make a pressure sensor with velostat, coppe
 
 Like the bend sensor, we will use a voltage divider circuit to read the pressure sensor, following the wiring diagram above. In this diagram, a 10kOhm resistor is used as the fixed resistor to compare with the resistance of the pressure sensor. However, this resistor value can be adjusted to optimize the range of readings that the microcontroller reads. Use [this tool](https://clementzheng.github.io/volt/) to calculate the optimum fixed resistor value to use. 
 
-To read this pressure sensor circuit, we will use the following [code example](code/analogRead.ino).
+To read this pressure sensor circuit, we will use the following [code example](code/analogRead).
 
 <br>
 <br>
@@ -164,7 +164,7 @@ To build a capacitive touch sensor, we will use a 1MOhm (1 million ohms) resisto
 
 Follow the diagram above to build a capacitive touch sensing circuit. Connect a 1MOhm resistor between digital pins `4` and `2`. Pin `2` is the sensor pin, which is extended with copper tape. The copper tape is the touch sensitive region.
 
-Use the following [example code](code/touchSensor.ino) for this circuit. In order to upload this code example, you will need to install the CapacitiveSensor library. In the Arduino IDE, go to Sketch > Include Library > Manage Libraries. Search for "CapacitiveSensor" by Paul Bagder, Paul Stoffregen, and install it.
+Use the following [example code](code/touchSensor) for this circuit. In order to upload this code example, you will need to install the CapacitiveSensor library. In the Arduino IDE, go to Sketch > Include Library > Manage Libraries. Search for "CapacitiveSensor" by Paul Bagder, Paul Stoffregen, and install it.
 
 How does capacitive touch sensing work? Capacitors are two conductive plates separated by an insulator. A capacitive touch sensor is typically one plate of that capacitor that is charged up; with the other "plate" being the earth (the literal ground). Humans, through our skin, extend the ground and changes the charging rate of the capacitor. By observing the rate at which a conductive plate charges up, a microcontroller can sense touch. More information [here](https://www.bareconductive.com/news/what-is-capacitive-sensing/).
 
@@ -183,7 +183,7 @@ In the previous examples, the code examples prints the sensor value every loop. 
 
 Let's look at buttons/sensors that use `digitalRead` first. Since `digitalRead`'s output is either 1 or 0, detecting "push" and "release" events is more straightforward.
 
-[Example code here](code/buttonEvent.ino).
+[Example code here](code/buttonEvent).
 
 For this code, we introduce a new variable `buttonValPrev`. On top of reading and storing the value of the button from `digitalRead`, we also keep track of its last value (from the previous update loop).
 
@@ -206,7 +206,7 @@ As illustrated by the table above, the previous reading is always trailing behin
 
 How about sensors that that give a range of values, such as via `analogRead` or the capacitive touch sensor? In this case, we need to set a threshold that determines when the event has occurred. For example, a pressure sensor is considered "pressed" when its `analogRead` value increases above `523` (just a random value for explanation purposes).  
 
-[Example code here](code/analogEvent.ino).
+[Example code here](code/analogEvent).
 
 | loop number | threshold | current reading | previous reading | event |
 | --- | --- | --- | --- | --- |

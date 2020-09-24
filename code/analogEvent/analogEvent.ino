@@ -17,7 +17,7 @@ void loop() {
     Serial.println("released");
   }
 
-  analogValPrev = analogVal // update buttonValPrev with current button value
+  analogValPrev = analogVal; // update buttonValPrev with current button value
   
   delay(50); // pause loop here for 50ms
 }
