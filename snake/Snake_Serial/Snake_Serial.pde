@@ -253,13 +253,13 @@ void readSerial() {
             moveUp();
             break;
           case '2':
-            moveRight();
+            moveLeft();
             break;
           case '3':
             moveDown();
             break;
           case '4':
-            moveLeft();
+            moveRight();
             break;
           case '5':
             resetGame();
