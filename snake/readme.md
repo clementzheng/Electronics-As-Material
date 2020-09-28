@@ -33,7 +33,7 @@ int serial_port_index = 0;
 
 To figure out which Serial port Processing should be listening to, open the run the following [Processing sketch](check_serial).
 
-![Processing Serial](../img/processing_serial.png)
+![Processing Serial](../img/processing_serialcheck.png)
 
 Check the print out in the black rectangle at the bottom of the processing IDE. You should see a series of lines, starting with `[ 0 ]` with the different ports your computer has. Find out with port Arduino uses. (Still not sure which is the Arduino? Check the serial port list in the Arduino IDE. Or, unplug the Arduino and run the Processing sketch and see which port disappears).
 
