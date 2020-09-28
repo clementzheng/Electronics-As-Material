@@ -30,11 +30,14 @@ This Processing sketch listens for commands coming over the serial port connecte
 ```
 int serial_port_index = 0;
 ```
-1. Connect the Arduino to the computer.
-1. Run the Processing sketch. When it runs, stop it immediately.
-1. Look at Processing's console (the black text rectangle at the bottom of the Processing IDE). It should list the different ports in order.
-1. The first port in that list has the index `0`, followed by `1` and so forth.
-1. Change the value of `serial_port_index` to match the port corresponding to the Arduino. (Still not sure which is the Arduino? Check the serial port list in the Arduino IDE. Or, unplug the Arduino and run the Processing sketch and see which port disappears).
+
+To figure out which Serial port Processing should be listening to, open the run the following [Processing sketch](check_serial).
+
+![Processing Serial](../img/processing_serial.png)
+
+Check the print out in the black rectangle at the bottom of the processing IDE. You should see a series of lines, starting with `[ 0 ]` with the different ports your computer has. Find out with port Arduino uses. (Still not sure which is the Arduino? Check the serial port list in the Arduino IDE. Or, unplug the Arduino and run the Processing sketch and see which port disappears).
+
+Change the value of `serial_port_index` in the `Snake_Serial.pde` file to match the port number corresponding to the Arduino.
 
 The Arduino microcontroller controls the Snake game in Processing by sending text commands over the serial port, with the `Serial.println("text command")` function. List of text commands:
 

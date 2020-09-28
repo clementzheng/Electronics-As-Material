@@ -19,6 +19,7 @@ Snake snake;
 PVector apple;
 
 void setup() {
+  println(Serial.list());
   SERIAL_PORT = new Serial(this, Serial.list()[serial_port_index], 9600);
 
   surface.setSize(gridSize*w, gridSize*h);

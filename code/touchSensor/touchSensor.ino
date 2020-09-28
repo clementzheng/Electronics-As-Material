@@ -11,7 +11,11 @@ void setup() {
 
 void loop() {
   capVal =  cs_4_2.capacitiveSensor(30);
-  Serial.println(capVal); // print the capacitive sensor value in a new line in serial
+  // Serial.println(capVal); // print the capacitive sensor value in a new line in serial
+
+  if (capVal > 2000) {
+    Serial.println("1");
+  }
   
   delay(50); // arbitrary delay to limit data to serial port
 }

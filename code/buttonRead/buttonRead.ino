@@ -8,7 +8,7 @@ void setup() {
 
 void loop() {
   buttonVal = digitalRead(pin); // digital read pin and assign the reading to buttonVal
-  Serial.println(buttonVal); // print the button value in a new line in serial
+  Serial.print(buttonVal); // print the button value in a new line in serial
 
   delay(50); // pause loop here for 50ms
 }
