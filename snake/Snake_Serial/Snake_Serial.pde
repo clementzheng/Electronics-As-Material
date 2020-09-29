@@ -2,7 +2,7 @@ import processing.serial.*;
 Serial SERIAL_PORT;
 int serial_port_index = 0;
 
-int gridSize = 60;
+int gridSize = 30;
 int w = 35;
 int h = 20;
 
