@@ -51,4 +51,4 @@ The Arduino microcontroller controls the Snake game in Processing by sending tex
 | `"6"` | speed down |
 | `"7"` | speed up | 
 
-Here is an [example Arduino code](Snake_Arduino) that listens to the state of 5 push buttons and sends a different text command over serial depending on which button is pressed.
+Here is an [example Arduino code](Snake_ArduinoExample) that listens to the state of 5 push buttons and sends a different text command over serial depending on which button is pressed.
