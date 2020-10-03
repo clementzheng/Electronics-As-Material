@@ -100,6 +100,8 @@ e.g. `pinMode(7, INPUT_PULLUP)`.
 
 Use the following [example code](code/buttonRead_pullup) to read this circuit. The digital pin used in this example is `7`.
 
+**Avoid using pins `0` and `1` for digital reading as those are also used for Serial communication**
+
 <br>
 <br>
 <br>
@@ -163,6 +165,8 @@ To build a capacitive touch sensor, we will use a 1MOhm (1 million ohms) resisto
 ![wiring touch sensor](img/touchWiring.png)
 
 Follow the diagram above to build a capacitive touch sensing circuit. Connect a 1MOhm resistor between digital pins `4` and `2`. Pin `2` is the sensor pin, which is extended with copper tape. The copper tape is the touch sensitive region.
+
+**Avoid using pins `0` and `1` for reading capacitive touch sensors as those are also used for Serial communication**
 
 Use the following [example code](code/touchSensor) for this circuit. In order to upload this code example, you will need to install the CapacitiveSensor library. In the Arduino IDE, go to Sketch > Include Library > Manage Libraries. Search for "CapacitiveSensor" by Paul Bagder, Paul Stoffregen, and install it.
 
