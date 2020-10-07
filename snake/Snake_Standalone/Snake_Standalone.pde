@@ -1,7 +1,3 @@
-import processing.serial.*;
-Serial SERIAL_PORT;
-int serial_port_index = 0;
-
 int gridSize = 30;
 int w = 35;
 int h = 20;
@@ -19,17 +15,12 @@ Snake snake;
 PVector apple;
 
 void setup() {
-  //SERIAL_PORT = new Serial(this, Serial.list()[serial_port_index], 9600);
-
   surface.setSize(gridSize*w, gridSize*h);
   snake = new Snake(10, float(round(w/2)), float(round(h/2)), initialSpeedInterval);
   newApple();
 }
 
 void draw() {
-
-  //readSerial();
-
   fill(backgroundColor);
   noStroke();
   rect(0, 0, width, height);
