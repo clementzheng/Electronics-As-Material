@@ -16,7 +16,7 @@ void loop() {
   // vice versa, a positive value means the button was just released
   if (buttonVal - buttonValPrev < 0) {
     Serial.println("pressed");
-  } else if (buttonVal - buttonValPrev > 1) {
+  } else if (buttonVal - buttonValPrev > 0) {
     Serial.println("released");
   }
 
