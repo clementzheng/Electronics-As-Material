@@ -28,8 +28,12 @@ void loop() {
   buttonValD = digitalRead(pinD);
   buttonValE = digitalRead(pinE);
 
-  if (buttonValA == 0) { // if button value is 0, send a text command over Serial
+  if (buttonValA > 0 && buttonValA < 2) { // if button value is 0, send a text command over Serial
     Serial.println("1");
+  }
+
+  if (buttonValA == 1) {
+    
   }
 
   if (buttonValB == 0) {
