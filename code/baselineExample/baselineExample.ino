@@ -11,12 +11,13 @@ void setup() {
 
   // Take many analog readings for two seconds
   // average the new analog readings with the baseline
-  while (millis() < 2000) {
-    baseline = (baseline + analogRead(pin)) / 2;
+  while (millis() < 5000) {
+    if (millis() > 1000) {
+      baseline = (baseline + analogRead(pin)) / 2;
+    }
   }
 
   Serial.begin(9600);
-
 }
 
 void loop() {

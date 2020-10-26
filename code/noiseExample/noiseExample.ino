@@ -17,7 +17,7 @@ void setup() {
 void loop() {
   capVal =  cs_4_2.capacitiveSensor(30);
 
-  differenceVal = abs(capVal - capValPrev);
+  differenceVal = (differenceVal*9 + (capVal - capValPrev)) / 10;
 
   Serial.println(differenceVal);
 
